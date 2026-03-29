@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32341b4fd38e01047983621ed88796fa, type: 3}
+  m_Name: Pedal
+  m_EditorClassIdentifier: 
+  Name: "\u538B\u529B\u677F"
+  shape: {fileID: 3717244317187494374, guid: c45342d3e8d111141b4d034f1a9c747e, type: 3}
+  groundType: 3
+  triggerEntities: []
+  effectEntities:
+  - {fileID: 11400000, guid: 2c0bfcf853690224283856fb6f7754d2, type: 2}

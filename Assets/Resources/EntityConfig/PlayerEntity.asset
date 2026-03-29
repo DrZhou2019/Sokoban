@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a91e40c8dcb8748488693a29dbc93fed, type: 3}
+  m_Name: PlayerEntity
+  m_EditorClassIdentifier: 
+  Name: Player
+  entityType: 1
+  isPushable: 1
+  isStoppable: 0
+  shape: {fileID: 395237279991884414, guid: ee3d0b82ac48ecb4ca864da43b7f9908, type: 3}

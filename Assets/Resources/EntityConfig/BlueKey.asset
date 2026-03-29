@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a1b393caa21ffd4a8c2ecf1415cf013, type: 3}
+  m_Name: BlueKey
+  m_EditorClassIdentifier: 
+  Name: "\u9EC4\u8272\u94A5\u5319"
+  entityType: 2
+  isPushable: 1
+  isStoppable: 0
+  shape: {fileID: 395237279991884414, guid: ecc1bcab3993a4f4394ef0ad188a92a1, type: 3}
+  LockEntity: {fileID: 11400000, guid: 38c22bec096a5754986c7ceb872e1251, type: 2}

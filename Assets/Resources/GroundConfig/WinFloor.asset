@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21bcd6741cb79a245a97c3087e0f4764, type: 3}
+  m_Name: WinFloor
+  m_EditorClassIdentifier: 
+  Name: "\u901A\u5173\u6D1E\u7A9F"
+  shape: {fileID: 3717244317187494374, guid: 511024703364e964eba6f00371cab9bd, type: 3}
+  groundType: 5
+  WinUiPanel: {fileID: 6808290395429180501, guid: 80dd93bc56cae3545aabf753757e7d89,
+    type: 3}
+  triggerEntity: {fileID: 11400000, guid: f352e0868ecdf454ca619e5111cbd198, type: 2}
