@@ -28,9 +28,11 @@
 ## 设计思路
 * 参考了MVC框架，整体结构分成规则层、输入层、表现层
 * 规则层：
-  * 使用ScriptableObject存储关卡、实体、地面。其中实体与地面通过继承重写父方法实现不同的功能效果。秉持涌现设计哲学，实体的功能设计保持灵活性，尽可能的通过配置的方式来实现功能
+  * 使用ScriptableObject存储关卡、实体、地面。其中实体与地面通过继承重写父方法实现不同的功能效果。秉持涌现设计哲学，实体的代码设计保持灵活性，尽可能的通过配置的方式来实现功能。
   * LevelManager负责加载关卡数据的同时，也负责整体的运行逻辑。
-  *加载的核心代码如下：
+  * 基本流程：<img width="553" height="474" alt="image" src="https://github.com/user-attachments/assets/527aac24-760b-4fe3-8e92-437be2feb6fa" />
+
+  *地图加载的核心代码如下：
 ~~~csharp
  public void Load(LevelData levelData)
  {
@@ -136,4 +138,76 @@ private bool TryMoveSingleEntity(Vector2Int targetPos, Direction direction)
     }
 ~~~
 * 输入层：
-  * 输入层很简单捏，使用Unity官方支持的Input Manager识别并参数输入进
+  * 输入层很简单捏，使用Unity官方支持的Input Manager识别并参数输入进LevelControl，消化输入后调用LeveManager的移动方法。
+* 表现层：
+ * 核心脚本LevelView，通过订阅LevelManager的各种事件，将实体上配置的shape绘制在场景中，并实时跟进。
+~~~csharp
+void DrawLevel()
+{
+    ClearLevelDraw();
+    EntityGOList = new Dictionary<Vector2Int, GameObject>();
+    GroundGOList = new Dictionary<Vector2Int, GameObject>();
+    foreach (Vector2Int vector2Int in LevelManager.GroundList.Keys)
+    {
+        if (LevelManager.GroundList[vector2Int] != null && LevelManager.GroundList[vector2Int].shape != null)
+        {
+            GameObject GroundGO = Instantiate(LevelManager.GroundList[vector2Int].shape, new Vector3(vector2Int.x, 0f, vector2Int.y), transform.rotation, transform);
+            GroundGOList.Add(vector2Int, GroundGO);
+            if (debugRequired) Debug.Log($"{vector2Int}上成功绘制地板{GroundGO}");
+
+        }
+    }
+    foreach (Vector2Int vector2Int in LevelManager.EntityList.Keys)
+    {
+        if (LevelManager.EntityList[vector2Int] != null && LevelManager.EntityList[vector2Int].shape != null)
+        {
+            GameObject EntityGO = Instantiate(LevelManager.EntityList[vector2Int].shape, new Vector3(vector2Int.x, 0f, vector2Int.y), transform.rotation, transform);
+            EntityGOList.Add(vector2Int, EntityGO);
+            if (debugRequired) Debug.Log($"{vector2Int}上成功绘制实体{EntityGO}");
+
+        }
+    }
+}
+void OnEntityMove(Vector2Int sourcePos, Vector2Int targetPos)
+{
+    if (EntityGOList == null || GroundGOList == null) return;
+
+    if (!EntityGOList.TryGetValue(sourcePos, out GameObject entityGo) || entityGo == null)
+    {
+        if (debugRequired) Debug.LogWarning($"无法移动实体显示：{sourcePos} 上没有实体游戏对象");
+        return;
+    }
+
+    if (entityGo.TryGetComponent<Animator>(out Animator animator))
+    {
+        Vector2Int delta = targetPos - sourcePos;
+        if (delta.y > 0) animator.SetTrigger("Up");
+        else if (delta.y < 0) animator.SetTrigger("Down");
+        else if (delta.x > 0) animator.SetTrigger("Right");
+        else if (delta.x < 0) animator.SetTrigger("Left");
+    }
+
+
+    SetGroundAnimatorTrigger(sourcePos, "AnythingLeft");
+    SetGroundAnimatorTrigger(targetPos, "AnythingEnter");
+
+    entityGo.transform.DOMove(new Vector3(targetPos.x, 0f, targetPos.y), 0.5f);
+    EntityGOList.Remove(sourcePos);
+    EntityGOList[targetPos] = entityGo;
+}
+~~~
+ * 同时支持向实体上的Animator发送动画事件，支持后续增加各种动画
+~~~csharp
+ /// <summary>
+ /// 尝试触发位于坐标上的地面的AnimatorTrigger
+ /// </summary>
+ /// <param name="pos"></param>
+ /// <param name="triggerName"></param>
+ public void SetGroundAnimatorTrigger(Vector2Int pos ,string triggerName)
+ {
+     if (GroundGOList.TryGetValue(pos, out GameObject groundTargetGo) && groundTargetGo != null && groundTargetGo.TryGetComponent<Animator>(out Animator groundTargetAnimator))
+     {
+         groundTargetAnimator.SetTrigger(triggerName);
+     }
+ }
+~~~
