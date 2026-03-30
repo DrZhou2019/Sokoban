@@ -22,6 +22,11 @@
   * 橡皮擦工具：选择工具后，在场景视图内点击需要删除的对象即可从关卡中去除
   * 移动工具：选择工具后，在场景视图选择想要移动的对象，再次点击其它位置即可将对象移动或替换到指定位置
 
+* 如何测试关卡？
+ * 当前的测试方式相对原始，需将配置好的关卡文件数据文件拖入场景的LevelManger的关卡列表中，并修改current level num的数值
+   <img width="574" height="388" alt="image" src="https://github.com/user-attachments/assets/ae55c96a-a99f-47ac-9870-cf21d8606ba8" />
+
+
 * 其它小功能：
 **关卡文件的增加、删除、复制、改名、关卡完整性验证
 
@@ -30,7 +35,9 @@
 * 规则层：
   * 使用ScriptableObject存储关卡、实体、地面。其中实体与地面通过继承重写父方法实现不同的功能效果。秉持涌现设计哲学，实体的代码设计保持灵活性，尽可能的通过配置的方式来实现功能。
   * LevelManager负责加载关卡数据的同时，也负责整体的运行逻辑。
-  * 基本流程：<img width="553" height="474" alt="image" src="https://github.com/user-attachments/assets/527aac24-760b-4fe3-8e92-437be2feb6fa" />
+  * 基本逻辑：
+    
+    <img width="553" height="474" alt="image" src="https://github.com/user-attachments/assets/527aac24-760b-4fe3-8e92-437be2feb6fa" />
 
   *地图加载的核心代码如下：
 ~~~csharp
